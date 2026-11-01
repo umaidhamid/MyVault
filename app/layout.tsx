@@ -18,7 +18,7 @@ export const metadata: Metadata = {
   description: "Private zero-knowledge secrets vault",
   applicationName: "MyVault",
   appleWebApp: { capable: true, title: "MyVault", statusBarStyle: "default" },
-  icons: { icon: "/pwa-icon/192", apple: "/pwa-icon/180" },
+  // Tab and home-screen icons come from app/icon.png and app/apple-icon.png.
 };
 
 export const viewport: Viewport = { themeColor: "#4f46e5" };

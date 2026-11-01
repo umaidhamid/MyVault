@@ -1,11 +1,12 @@
 // MyVault service worker. Deliberately tiny and conservative:
 // - caches only public static build assets (hashed, immutable) and the offline page;
 // - NEVER caches pages, API responses or anything behind login, so no vault data (even encrypted) is stored by the worker.
-const CACHE = "myvault-static-v1";
+const CACHE = "myvault-static-v2";
 const OFFLINE = "/offline.html";
+const PRECACHE = [OFFLINE, "/icons/icon-192.png"];
 
 self.addEventListener("install", (event) => {
-  event.waitUntil(caches.open(CACHE).then((c) => c.add(OFFLINE)).then(() => self.skipWaiting()));
+  event.waitUntil(caches.open(CACHE).then((c) => c.addAll(PRECACHE)).then(() => self.skipWaiting()));
 });
 
 self.addEventListener("activate", (event) => {
@@ -29,8 +30,8 @@ self.addEventListener("fetch", (event) => {
     return;
   }
 
-  // Hashed build assets never change, so cache-first is safe.
-  if (url.pathname.startsWith("/_next/static/")) {
+  // Hashed build assets and the fixed app icons are public and rarely change, so cache-first is safe.
+  if (url.pathname.startsWith("/_next/static/") || url.pathname.startsWith("/icons/")) {
     event.respondWith(
       caches.match(req).then(
         (hit) =>
@@ -45,5 +46,5 @@ self.addEventListener("fetch", (event) => {
       ),
     );
   }
-  // Everything else (API, pages data, icons, manifest) goes straight to the network.
+  // Everything else (API, page data, manifest) goes straight to the network.
 });

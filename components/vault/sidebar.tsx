@@ -1,6 +1,7 @@
 "use client";
 
-import { KeyRound, LayoutDashboard, Folder, Menu, ScrollText, Settings, ShieldCheck, Sparkles, X } from "lucide-react";
+import { KeyRound, LayoutDashboard, Folder, Menu, ScrollText, Settings, Sparkles, X } from "lucide-react";
+import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
@@ -64,7 +65,7 @@ export function Sidebar() {
 function Brand() {
   return (
     <span className="flex items-center gap-2 text-lg font-semibold tracking-tight">
-      <span className="grid size-8 place-items-center rounded-lg bg-indigo-600 text-white"><ShieldCheck size={18} /></span>
+      <Image src="/icons/icon-192.png" alt="" width={32} height={32} className="rounded-lg" priority />
       MyVault
     </span>
   );
