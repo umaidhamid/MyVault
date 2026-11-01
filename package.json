@@ -1,5 +1,5 @@
 {
-  "name": "myvault-tmp",
+  "name": "myvault",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -9,9 +9,14 @@
     "lint": "eslint"
   },
   "dependencies": {
+    "@noble/hashes": "^2.4.0",
+    "@node-rs/argon2": "^2.2.2",
+    "lucide-react": "^1.66.0",
+    "mongodb": "^7.8.0",
     "next": "16.4.3",
     "react": "19.3.0",
-    "react-dom": "19.3.0"
+    "react-dom": "19.3.0",
+    "zod": "^4.6.7"
   },
   "devDependencies": {
     "@tailwindcss/turbopack": "^4",
