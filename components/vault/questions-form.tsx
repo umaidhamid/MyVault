@@ -1,5 +1,6 @@
 "use client";
 
+import { PasswordInput } from "@/components/ui/password-input";
 import { useEffect, useState } from "react";
 import { ANSWERS_KDF, RECOVERY_QUESTIONS, deriveAnswerKeys, toB64 } from "@/lib/crypto/kdf";
 import { seal } from "@/lib/crypto/envelope";
@@ -26,7 +27,7 @@ export function QuestionsForm() {
     const answers = [0, 1, 2].map((i) => String(fd.get(`a${i}`)));
     const password = String(fd.get("password"));
     if (new Set(picked).size !== 3) return setStatus({ ok: false, text: "Pick three different questions." });
-    if (answers.some((a) => a.trim().length < 10)) return setStatus({ ok: false, text: "Each answer needs at least 10 characters." });
+    if (answers.some((a) => a.trim().length < 5)) return setStatus({ ok: false, text: "Each answer needs at least 5 characters." });
     setBusy(true);
     setStatus(null);
     try {
@@ -76,10 +77,10 @@ export function QuestionsForm() {
               <option key={id} value={id}>{q}</option>
             ))}
           </select>
-          <input className={input} name={`a${i}`} type="password" placeholder="Answer" autoComplete="off" required />
+          <PasswordInput name={`a${i}`} placeholder="Answer" autoComplete="off" required />
         </div>
       ))}
-      <input className={input} name="password" type="password" placeholder="Master password (to confirm)" autoComplete="current-password" required />
+      <PasswordInput name="password" placeholder="Master password (to confirm)" autoComplete="current-password" required />
       {status && <p role="alert" className={`text-sm ${status.ok ? "text-emerald-600" : "text-red-600"}`}>{status.text}</p>}
       <button className={btn} disabled={busy}>{busy ? "Working… (takes a few seconds)" : "Save recovery questions"}</button>
     </form>

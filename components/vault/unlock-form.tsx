@@ -1,8 +1,9 @@
 "use client";
 
+import { PasswordInput } from "@/components/ui/password-input";
 import { useState } from "react";
 import { unlockWithPassword } from "@/lib/vault-client/unlock";
-import { btn, input } from "@/components/ui/styles";
+import { btn } from "@/components/ui/styles";
 
 /** Re-derives the vault key from the master password (the session is already signed in). */
 export function UnlockForm({ compact }: { compact?: boolean }) {
@@ -26,7 +27,7 @@ export function UnlockForm({ compact }: { compact?: boolean }) {
 
   return (
     <form onSubmit={onSubmit} className="flex flex-col gap-2">
-      <input className={input} name="password" type="password" placeholder="Master password" autoComplete="current-password" required />
+      <PasswordInput name="password" placeholder="Master password" autoComplete="current-password" required />
       {error && <p role="alert" className="text-xs text-red-600">{error}</p>}
       <button className={btn} disabled={busy}>{busy ? "Unlocking…" : compact ? "Unlock" : "Unlock vault"}</button>
     </form>

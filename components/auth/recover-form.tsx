@@ -1,5 +1,6 @@
 "use client";
 
+import { PasswordInput } from "@/components/ui/password-input";
 import Link from "next/link";
 import { useRef, useState } from "react";
 import {
@@ -124,7 +125,7 @@ export function RecoverForm() {
           {questions.map((q, i) => (
             <label key={i} className="flex flex-col gap-1 text-sm">
               {RECOVERY_QUESTIONS[q]}
-              <input className={input} name={`a${i}`} type="password" autoComplete="off" required />
+              <PasswordInput name={`a${i}`} autoComplete="off" required />
             </label>
           ))}
           {err}
@@ -134,8 +135,8 @@ export function RecoverForm() {
       {step === "password" && (
         <form onSubmit={resetPassword} className="flex flex-col gap-4">
           <p className="text-sm text-slate-500">Answers accepted. Choose a new master password.</p>
-          <input className={input} name="password" type="password" placeholder="New master password" autoComplete="new-password" required />
-          <input className={input} name="confirm" type="password" placeholder="Confirm" autoComplete="new-password" required />
+          <PasswordInput name="password" placeholder="New master password" autoComplete="new-password" required />
+          <PasswordInput name="confirm" placeholder="Confirm" autoComplete="new-password" required />
           {err}
           <button className={btn} disabled={busy}>{busy ? "Saving…" : "Set new password"}</button>
         </form>

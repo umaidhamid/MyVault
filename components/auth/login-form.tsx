@@ -1,5 +1,6 @@
 "use client";
 
+import { PasswordInput } from "@/components/ui/password-input";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
@@ -43,7 +44,7 @@ export function LoginForm() {
     <form onSubmit={onSubmit} className="flex w-full max-w-sm flex-col gap-4 rounded-xl border border-slate-200 bg-white p-8 shadow-sm">
       <div><h1 className="text-2xl font-semibold">MyVault</h1><p className="text-sm text-slate-500">Log in to unlock your encrypted vault.</p></div>
       <input className={input} name="email" type="email" placeholder="Email" autoComplete="username" required />
-      <input className={input} name="password" type="password" placeholder="Master password" autoComplete="current-password" required />
+      <PasswordInput name="password" placeholder="Master password" autoComplete="current-password" required />
       {error && <p role="alert" className="text-sm text-red-600">{error}</p>}
       <button className={btn} disabled={busy}>{busy ? "Unlocking…" : "Log in"}</button>
       <Link href="/recover" className="text-sm text-indigo-600 underline">Forgot password?</Link>
