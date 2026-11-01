@@ -5,7 +5,15 @@ import { getDb } from "./db";
 
 /** CSRF defence for state-changing requests: exact Origin match + custom header (forces a CORS preflight). */
 export function sameOrigin(req: Request) {
-  return req.headers.get("origin") === new URL(process.env.APP_URL!).origin && req.headers.get("x-mv-csrf") === "1";
+  const origin = req.headers.get("origin");
+  if (!origin || req.headers.get("x-mv-csrf") !== "1") return false;
+  try {
+    // Either the configured production origin, or the host this request was actually sent to (so localhost dev works
+    // with the production APP_URL). A cross-site page can't forge its Origin header, so it can't match either.
+    return origin === new URL(process.env.APP_URL!).origin || new URL(origin).host === req.headers.get("host");
+  } catch {
+    return false;
+  }
 }
 
 // shortcut: trusts x-forwarded-for, which is spoofable unless a proxy overwrites it; the per-account throttle still holds.
